@@ -61,7 +61,7 @@ The tutor provides instant feedback on quiz responses.
 
 #### ❌ Upon Incorrect Answer
 
-![Incorrect Answer](static/IA)
+![Incorrect Answer](static/IA.png)
 
 #### Overall Feedback using Fuzzy Logic
 ![Quiz Feedback](static/OvrlF.png)
