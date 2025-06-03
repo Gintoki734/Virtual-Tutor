@@ -26,7 +26,7 @@ Please refer to the file `Guide on the application setup.docx` for detailed inst
 
 Markdown is used to convert educational content into HTML-style formats, allowing easy and dynamic text deployment.
 
-![Markdown conversion](https://github.com/user-attachments/assets/73336f44-a347-432e-9b50-76982ef7f0e1)
+![Markdown conversion](static/MrkD.png)
 
 ---
 
@@ -34,7 +34,7 @@ Markdown is used to convert educational content into HTML-style formats, allowin
 
 Courses stored in the backend are dynamically loaded and displayed.
 
-![Courses Stored](https://github.com/user-attachments/assets/94794bab-250e-427d-8055-093822bbebf9)
+![Courses Stored](static/Courses.png)
 
 ---
 
@@ -42,14 +42,14 @@ Courses stored in the backend are dynamically loaded and displayed.
 
 Users can select a course to begin learning.
 
-![Course Selection](https://github.com/user-attachments/assets/dfbaa13d-ca7f-415d-8f19-8a998f5e0c23)
+![Course Selection](static/CC.png)
 
 ---
 
 ### 🤖 Chat with the Virtual Tutor
 
 Users can interact with the virtual tutor powered by an LLM for personalized assistance.
-![Chat 2](https://github.com/user-attachments/assets/29e6320a-3eff-4c65-9f80-60dad866f3b0)
+![Chat 2](static/CB.png)
 
 ---
 
@@ -57,11 +57,11 @@ Users can interact with the virtual tutor powered by an LLM for personalized ass
 
 The tutor provides instant feedback on quiz responses.
 #### ✔️ Upon Correct Answer
-![Correct Answer](https://github.com/user-attachments/assets/619baffe-23c2-44b9-93f2-bcc0537c7944)
+![Correct Answer](static/CA.png)
 
 #### ❌ Upon Incorrect Answer
 
-![Incorrect Answer](https://github.com/user-attachments/assets/3e1049b8-2476-48b6-b7e7-e41c13747552)
+![Incorrect Answer](static/IA)
 
 #### Overall Feedback using Fuzzy Logic
-![Quiz Feedback](https://github.com/user-attachments/assets/c52f9565-af22-4bce-8cae-0825611fd793)
+![Quiz Feedback](static/OvrlF.png)
