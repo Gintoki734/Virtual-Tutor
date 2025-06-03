@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{ course_name }}</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      table,
+      td {
+        margin: 10px;
+        padding: 10px;
+      }
+      table,
+      th,
+      td {
+        border: 1px solid;
+      }
+      h1 {
+        padding: 10px;
+        background-color: palevioletred;
+        color: white;
+      }
+      img {
+        width: 50%;
+        height: 50%;
+      }
+    </style>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        let sessionTimer = Date.now(); // Starting the timer
+        let currentDate = new Date(); // Get the current date and time
+        let hasLogged = false; // prevents the mutiple logs of the same session
+
+        // Logs the session duration and sends it to the backend
+        function logTime() {
+          if (hasLogged) return;
+
+          // Calculate the time spent in the course
+          let sessionEndTimer = Date.now();
+          let duration = (sessionEndTimer - sessionTimer) / 1000; // Convert to seconds
+
+          // Get current date and time
+          let date = currentDate.toISOString().split("T")[0]; // Extracts YYYY-MM-DD
+          let time = currentDate.toTimeString().split(" ")[0]; // Extracts HH:MM:SS
+
+          // Send the time to Flask
+          fetch("/log_time", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              duration: duration,
+              courseName: "{{ course_name }}",
+              date: date,
+              time: time,
+            }),
+          });
+
+          hasLogged = true;
+
+          console.log("Session logged:", duration, "seconds");
+        }
+
+        // Detect when the user hides the page (switches tab/minimizes)
+        document.addEventListener("visibilitychange", function () {
+          if (document.visibilityState === "hidden") {
+            logTime(); // Log the time when the user stops looking
+          } else {
+            sessionTimer = Date.now(); // Start a new session when they return
+            hasLogged = false;
+          }
+        });
+
+        // Function to send the value to the backend
+        function sendValueToBackend(inputValue) {
+          // Hide the button to prevent multiple clicks
+          const sendButton = document.getElementById("sendValueButton");
+          sendButton.style.display = "none"; // Hide the button
+
+          document.getElementById("responseDisplay").innerText =
+            "Loading Message...";
+
+          // Send the value to the server using a POST request
+          fetch("/send_value", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ value: inputValue }), // Send the input value as JSON
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              // Display the response from the server
+              document.getElementById("responseDisplay").innerText =
+                data.response;
+              // Re-show the button once the operation is complete
+              sendButton.style.display = "inline-block"; // Re-show the button
+            })
+            .catch((error) => console.error("Error:", error));
+        }
+
+        // Event listener for sending value to the backend
+        document
+          .getElementById("sendValueButton")
+          .addEventListener("click", function () {
+            // Get the value from the input field
+            const inputValue = document.getElementById("inputValue").value;
+
+            // Call the sendValueToBackend function
+            sendValueToBackend(inputValue);
+          });
+
+        // Also log time when the user completely leaves the page
+        window.addEventListener("beforeunload", logTime);
+      });
+    </script>
+  </head>
+  <body class="bg-light">
+    <h1 class="text-center mb-4">
+      <a
+        href="{{ url_for('index') }}"
+        style="text-decoration: none; color: inherit"
+        >{{ course_name }}</a
+      >
+    </h1>
+    <a
+      href="{{ url_for('index') }}"
+      class="btn btn-outline-primary btn-sm"
+      style="width: 20%"
+    >
+      Home</a
+    >
+    <br /><br />
+
+    <div class="container mb-4 border border-5">
+      <!-- where the content gets displayed -->
+      {{ content | safe }}
+      <br />
+      <div class="border border-5" style="text-align: center">
+        <br />
+        <input
+          type="text"
+          id="inputValue"
+          placeholder="Ask a Question"
+          style="width: 50%"
+        />
+        <button
+          id="sendValueButton"
+          class="btn btn-outline-primary"
+          style="margin-left: 20px"
+        >
+          Ask
+        </button>
+        <p id="responseDisplay" style="margin: 20px"></p>
+      </div>
+
+      <br /><br />
+
+      <!-- Link to the quiz related to the course -->
+      <a href="{{ url_for('quiz', course_name=course_name) }}">
+        <button class="btn btn-primary">Take Quiz</button>
+      </a>
+      <br /><br />
+    </div>
+    <br />
+    <footer style="text-align: center">
+      <p>
+        This website uses content taken from
+        <a href="https://www.bbc.co.uk/bitesize/subjects/z4crr2p"
+          >BBC Bitesize</a
+        >. BBC is not affiliated with or endorsing this site.
+      </p>
+      <p class="quiz-attribution">
+        This quiz is adapted from BBC Bitesize. Original content © BBC.
+      </p>
+
+      <p>
+        Image source:
+        <a href="https://www.bbc.co.uk/bitesize/subjects/z4crr2p"
+          >BBC Bitesize</a
+        >
+      </p>
+    </footer>
+  </body>
+</html>

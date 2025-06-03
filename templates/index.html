@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Courses</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      h1 {
+        padding: 10px;
+        background-color: palevioletred;
+        color: white;
+      }
+
+      img {
+        height: 20%;
+        width: 20%;
+      }
+    </style>
+  </head>
+  <body class="bg-light">
+    <h1 class="text-center mb-4">
+      <a href="/" style="text-decoration: none; color: inherit"
+        >Spanish Courses</a
+      >
+    </h1>
+    <a href="/" class="btn btn-outline-primary btn-sm" style="width: 20%">
+      Look at Tasks Information</a
+    >
+    <br /><br />
+    <div class="container mb-4 border border-5">
+      <br />
+      <ul>
+        <!-- Loads all the courses -->
+        {% for course in courses %}
+        <li>
+          <a
+            href="{{ url_for('course', course_name=course) }}"
+            class="btn btn-outline-primary"
+          >
+            <!-- Loads images from the static files, if statement is used as some files types is jpg instead of png and somefiles doesnt have "a" in their file name -->
+            <img
+              src="static/{{ loop.index }}{% if loop.index in [6, 7] %}b.png{% elif loop.index in [3, 5, 6, 7, 11] %}a.jpg{% else %}a.png{% endif %}"
+              alt="Course Image"
+            />
+            {{ course }}</a
+          >
+        </li>
+        <br /><br />
+        {% endfor %}
+      </ul>
+    </div>
+    <br /><br />
+    <footer style="text-align: center">
+      <p>
+        This website uses content taken from
+        <a href="https://www.bbc.co.uk/bitesize/subjects/z4crr2p"
+          >BBC Bitesize</a
+        >. BBC is not affiliated with or endorsing this site.
+      </p>
+      <p class="quiz-attribution">
+        This quiz is adapted from BBC Bitesize. Original content © BBC.
+      </p>
+
+      <p>
+        Image source:
+        <a href="https://www.bbc.co.uk/bitesize/subjects/z4crr2p"
+          >BBC Bitesize</a
+        >
+      </p>
+    </footer>
+  </body>
+</html>
